@@ -1,0 +1,15 @@
+#!/bin/bash
+# Written by Şefik Efe Altınoluk aka f4T1H21
+# Script to toggle between pre-selected audio profiles
+
+current_profile=$(pactl list cards | grep "Active Profile" | awk {'print $3'})
+profiles=('output:analog-stereo+input:analog-stereo' 'output:hdmi-stereo+input:analog-stereo')
+
+for profile in "${profiles[@]}"; do
+    if ! [[ $current_profile == $profile ]]; then
+        pactl set-card-profile 0 $profile
+        new_profile=$(grep -oP ':\K.*(?=\+)' <<< \"${profile}\")
+        echo "[+] Output profile: ${new_profile}" 
+        exit 0
+    fi
+done

@@ -1,0 +1,65 @@
+#!/bin/bash
+# Written by Şefik Efe Altınoluk aka f4T1H21
+
+function notify_vol() {
+    volume=$(pamixer --sink $snknum --get-volume)
+    isMute=$(pamixer --sink $snknum --get-mute)
+    if [[ $isMute == true || $volume -eq 0 ]]; then
+        icon="mute";
+        status=" (MUTE) ";
+    elif (( $volume >= 50 )); then
+        icon="hi";
+    else
+        icon="low";
+    fi
+    dunstify -u low -r 3000 -a "changevolume" -t 2000 -i "vol-${icon}" -h int:value:$volume "Ses yüksekliği: %${volume}${status}"
+}
+
+function notify_mic() {
+    volume=$(pamixer --source $srcnum --get-volume)
+    if $(pamixer --source $srcnum --get-mute) || [[ $volume -eq 0 ]]; then
+        icon='mute';
+        status=" (MUTE)"
+    else
+        icon='unmute';
+    fi
+    dunstify -u low -r 4000 -a "changemicrophone" -t 2000 -i "mic-${icon}" -h int:value:$volume "Mikrofon: %${volume}${status}"
+   
+}
+
+snknum=$(pamixer --list-sinks | grep "output" | awk {'print $1'})
+srcnum=$(pamixer --list-sources | grep "input" | awk {'print $1'})
+
+case $1 in
+vol+)
+	# Set the volume on (if it was muted)
+	pamixer --sink $snknum -u
+    if ! (( $(pamixer --get-volume) >= 120 )); then
+        pamixer --sink $snknum -i $2 --allow-boost
+    fi
+	;;
+vol-)
+	pamixer --sink $snknum -u
+	pamixer --sink $snknum -d $2
+	;;
+vol-mute)
+	pamixer --sink $snknum -t
+	;;
+mic+)
+    pamixer --source $srcnum -u
+    if ! (( $(pamixer --get-volume) >= 75 )); then
+        pamixer --source $srcnum -i $2
+    fi
+    ;;
+mic-)
+    pamixer --source $srcnum -u
+    pamixer --source $srcnum -d $2
+    ;;
+mic-mute)
+    pamixer --source $srcnum -t
+    ;;
+esac
+
+# Get the first 3 characters of the variable $1 and
+# concatenate with the string and call the corresponding function.
+notify_${1:0:3}

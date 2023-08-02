@@ -1,0 +1,86 @@
+#!/usr/bin/zsh
+# Zsh aliases configuration
+
+alias kres="killall plasmashell && kstart5 plasmashell"
+alias history="history 0"
+alias sd='shutdown now'
+alias se='nvim $ZDOTDIR/.zshrc'
+alias ae='nvim $ZDOTDIR/aliasrc'
+alias up='sudo apt update && sudo apt full-upgrade -y && sudo apt autoremove -y && sudo apt autoclean && sudo apt clean'
+alias tt="up && sd"
+alias clear="printf '\033[2J\033[3J\033[1;1H'"
+alias cls='clear'
+alias ee='exit'
+alias v='nvim'
+#alias sm='xrandr --output HDMI1 --mode 1920x1080 --output eDP1 --auto --left-of HDMI1'
+#alias sm='set_monitor_resolutions'
+if command -v bat &> /dev/null; then
+    alias cat="bat -pp --theme \"Visual Studio Dark+\"" 
+    alias catt="bat --theme \"Visual Studio Dark+\"" 
+fi
+
+# enable color support of ls, less and man, and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    export LS_COLORS="$LS_COLORS:ow=30;44:" # fix ls color for folders with 777 permissions
+
+    alias ls='lsd --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+    alias diff='diff --color=auto'
+    alias ip='ip --color=auto'
+
+    export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+    export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+    export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+    export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
+    export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+    export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+    export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+
+    # Take advantage of $LS_COLORS for completion as well
+    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+    zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+fi
+
+# some more ls aliases
+alias ll='ls -l'
+alias la='ls -alh'
+alias l='ls -CF'
+
+# cd into the root directory of the git repository we're in
+alias cdr='cd $(git rev-parse --show-toplevel)'
+
+# cd into the upper blank directory
+function cdc {
+    dest=$1
+    if [[ -z $dest ]]; then
+        dest=.
+    fi
+
+    if [[ $dest == ".." ]]; then
+        cdcu
+        return
+    fi
+
+    cd $dest
+
+    if [[ $(ls -A1 | wc -l) -eq 1 ]]; then
+        if [ -d $(ls -A1 | head -1) ]; then
+            cdc $(ls -A1 | head -1)
+        fi
+    fi
+}
+
+# cd into the lower blank directory
+function cdcu {
+    cd ..
+    if [[ $(ls -A1 | wc -l) -eq 1 ]]; then
+        cdcu
+    fi
+}
+

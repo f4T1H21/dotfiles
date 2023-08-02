@@ -1,0 +1,31 @@
+#!/bin/bash
+# Written by Şefik Efe Altınoluk aka f4T1H21
+
+# Get the specifications of external monitor
+ext_mon_name=$(xrandr | grep " connected " | grep -v eDP1 | awk {'print $1'})
+ext_mon_resolution=$(xrandr | grep -v "connect" | grep "+" | tail -n 1 | awk {'print $1'})
+
+# Check whether ext_mon_name variable got any values.
+if [[ -z "$ext_mon_name" ]]; then
+    echo -e "[i] There's no monitor device connected!\n[+] Laptop monitor resolution reset.";
+    xrandr --output eDP1 --auto --scale 1x1 --fb 1920x1080 2>/dev/null
+    exit 0
+fi
+
+# Get external monitor's resolution's width & height
+width=$(cut -d 'x' -f 1 <<< "$ext_mon_resolution")
+height=$(cut -d 'x' -f 2 <<< "$ext_mon_resolution")
+
+# Laptop monitor resolution: 1920x1080
+# Calculate scaling factor by dividing
+# ext_monitor's resolution values into
+# laptop monitor's resolution values respectively
+scalingfactor=$(awk "BEGIN {print ($width/1920)}")x$(awk "BEGIN {print ($height/1080)}")
+
+# Scale laptop's monitor with the scaling factor and 
+# set panning to external monitor's resolution.
+# Scale external monitor with the 100% and
+# set the resolution automatically
+xrandr --output eDP1 --scale $scalingfactor --panning $ext_mon_resolution --output $ext_mon_name --scale 1x1 --auto
+
+echo "[+] Monitor resolutions set."

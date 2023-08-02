@@ -1,0 +1,72 @@
+#!/bin/bash
+# Written by Şefik Efe Altınoluk aka f4T1H21
+
+function get_current_brightness() {
+    case $1 in
+        laptop)
+            echo $(cut -d '.' -f1 <<< $(brillo -G))
+        ;;
+        external_monitor)
+            echo $(ddcutil getvcp 10 | grep -oP 'VCP code 0x10 \(Brightness.*=\D*\K\d*(?=,)') 
+        ;;
+    esac
+}
+
+function notify_brightness() {
+    brightness=$(get_current_brightness $1)
+    if (( $brightness >= 35 )); then
+        status="hi";
+    else
+        status="low";
+    fi
+
+    if [[ $1 == "laptop" ]]; then
+        ekran="Gömülü"
+    elif [[ $1 == "external_monitor" ]]; then
+        ekran="Harici"
+    fi
+
+    dunstify -u low -r 5000 -a "changebrightness" -t 2000 -i "backlight-${status}" -h int:value:"$brightness" "$ekran ekran parlaklığı: %$brightness"
+}
+
+case $1 in
+    laptop)
+        if (( $(cut -d '.' -f1 <<< $(brillo -G)) <= 5 )); then
+            type="-p"
+        else
+            type="-q"
+        fi
+
+        case $2 in
+        +)
+            op="-A"	
+            ;;
+        -)
+            op="-U"
+            ;;
+        esac
+        brillo $type $op $3
+    ;;
+
+    external_monitor)
+        current=$(get_current_brightness $1)
+        case $2 in
+        +)
+            val=$(($current + $3))
+        ;;
+        -)
+            val=$(($current - $3))
+        ;;
+        esac
+        
+        if [[ $val -gt 100 ]]; then
+            val=100
+        elif [[ $val -lt 0 ]]; then
+            val=0
+        fi
+
+        ddcutil setvcp 10 $val 1>/dev/null
+    ;;
+esac
+
+notify_brightness $1

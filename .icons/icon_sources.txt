@@ -1,0 +1,16 @@
+volume-high:
+https://www.iconsdb.com/white-icons/volume-up-4-icon.html
+volume-low:
+https://www.iconsdb.com/white-icons/volume-down-5-icon.html
+volume-mute:
+https://www.iconsdb.com/white-icons/mute-2-icon.html
+
+mic:
+https://icons8.com/icon/M0nvDJhT5w5g/microphone
+mic-mute:
+https://icons8.com/icon/3rRzOnkDqQxz/mute-unmute
+
+brightness-high:
+https://www.flaticon.com/free-icon/brightness_466300
+brightness-low:
+https://www.flaticon.com/free-icon/brightness_466351

@@ -1,0 +1,3 @@
+#!/bin/bash
+saat=$(date +"%H")
+if (( $saat >= 19 || $saat <= 8)); then redshift -P -O 4000; else redshift -P -O 6500; fi

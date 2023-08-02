@@ -1,0 +1,6 @@
+# ignore zsh history and completion dumps
+zsh/history
+zsh/.zcompdump
+
+# ignore tmux plugins
+tmux/plugins/
