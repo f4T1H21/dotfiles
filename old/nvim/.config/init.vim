@@ -1,5 +1,5 @@
-" Neovim config by Şefik Efe
-
+" Neovim config by Şefik Efe Altınoluk aka f4T1H21
+" Inspired by DistroTube
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vim-Plug for managing plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

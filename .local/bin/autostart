@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+# Autostart ssh-agent if there's no one running (for GitHub SSH authentication)
+if [ $(ps ax | grep [s]sh-agent | wc -l) -gt 0 ] ; then
+    # ssh-agent is already running
+else
+    eval $(ssh-agent -s)
+fi
+

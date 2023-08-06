@@ -1,3 +1,5 @@
 #!/bin/bash
+# Written by Şefik Efe Altınoluk aka f4T1H21
+
 saat=$(date +"%H")
 if (( $saat >= 19 || $saat <= 8)); then redshift -P -O 4000; else redshift -P -O 6500; fi

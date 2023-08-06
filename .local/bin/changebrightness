@@ -69,4 +69,8 @@ case $1 in
     ;;
 esac
 
-notify_brightness $1
+case $4 in
+  notify)
+    notify_brightness $1
+  ;;
+esac

@@ -1,5 +1,5 @@
 #!/usr/bin/zsh
-# Zsh aliases configuration
+# Zsh aliases and functions configuration
 
 alias kres="killall plasmashell && kstart5 plasmashell"
 alias history="history 0"
@@ -84,3 +84,26 @@ function cdcu {
     fi
 }
 
+# set working directory
+function swd {
+    dest=$1 
+    if [[ -z $dest  || $dest == "." ]]; then
+        dest=$(pwd)
+    else
+        dest="$HOME/Documents/$dest"
+    fi
+    export WD="$dest" # Working Directory
+    echo $WD > ~/.working_directory
+    echo "Set Working Directory: $WD"
+    #read "?Set Working Directory: $HOME/Documents/" WORKING_DIR
+}
+
+# cd into working directory
+function cwd {
+    if [[ -f ~/.working_directory ]]; then
+        WD=$(cat ~/.working_directory)
+    else
+        WD="$HOME/Documents"
+    fi
+    cd $WD
+}

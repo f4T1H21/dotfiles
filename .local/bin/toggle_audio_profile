@@ -1,6 +1,7 @@
 #!/bin/bash
 # Written by Şefik Efe Altınoluk aka f4T1H21
 # Script to toggle between pre-selected audio profiles
+# Can be used when switching between laptop speaker and external monitor speaker
 
 current_profile=$(pactl list cards | grep "Active Profile" | awk {'print $3'})
 profiles=('output:analog-stereo+input:analog-stereo' 'output:hdmi-stereo+input:analog-stereo')
