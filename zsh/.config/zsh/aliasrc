@@ -53,6 +53,8 @@ alias ll='ls -l'
 alias la='ls -alh'
 alias l='ls -CF'
 
+# cd into dotfiles directory
+alias cdd='cd ~/git/dotfiles'
 # cd into the root directory of the git repository we're in
 alias cdr='cd $(git rev-parse --show-toplevel)'
 

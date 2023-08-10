@@ -7,7 +7,7 @@ local g = vim.g
 -- }
 
 g.mapleader = " "
-o.clipboard = ""
+o.clipboard = "unnamedplus"
 o.undofile = false
 o.number = true
 o.relativenumber = true

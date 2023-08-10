@@ -33,13 +33,8 @@ M.general = {
     ["<C-n>"] = { ":NvimTreeFocus<CR>", "Focus to nvim tree" },
 
     ["x"] = { [["_x]], "Delete one character without yanking" },
-
-    ["<leader>pP"] = { [["+P]], "Paste before from system clipboard" },
-    ["<leader>pp"] = { [["+p]], "Paste after from system clipboard" },
-    ["<leader>y"] = { [["+y]], "Copy to system clipboard" },
-    ["<leader>Y"] = { [["+Y]], "Copy line to system clipboard" },
-
-    ["<leader>d"] = { [["_d]], "Delete without yanking" },
+    ["d"] = { [["_d]], "Just Delete" },
+    ["<leader>d"] = { "d", "Delete with yanking" },
 
     -- Tmux keybindings
     ["<C-f>"] = { "<cmd>silent !tmux neww tmux-sessionizer<CR>", "" },
@@ -70,8 +65,8 @@ M.general = {
 
   v = {
     ["x"] = { [["_x]], "Delete one character without yanking" },
-    ["<leader>y"] = { [["+y]], "Copy to system clipboard" },
-    ["<leader>d"] = { [["_d]], "Delete without yanking" },
+    ["d"] = { [["_d]], "Just delete" },
+    ["<leader>d"] = { "d", "Delete with yanking" },
     ["J"] = { ":m '>+1<CR>gv=gv" },
     ["K"] = { ":m '<-2<CR>gv=gv" },
   },

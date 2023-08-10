@@ -3,7 +3,7 @@ export EDITOR="nvim"
 export LESSHISTFILE="-"
 export LESS_HIST_SIZE="-"
 
-export PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.npm-global/bin"
 export NV="$HOME/.config/nvim/lua/custom"
 export ZDOTDIR="$HOME/.config/zsh"
 export SD=$ZDOTDIR

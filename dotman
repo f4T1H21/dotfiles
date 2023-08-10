@@ -1,0 +1,75 @@
+#!/bin/bash
+# DOTfiles MANagement tool written by Şefik Efe Altınoluk aka f4T1H21
+
+function get_my_dir() {
+if [[ -L "$0" ]];then
+  link_file_path=$(readlink "$0")
+  echo $(dirname "$link_file_path")
+else
+  current_working_dir=$(pwd)
+  my_relative_path=$(dirname "$0")
+  echo $(dirname "${current_working_dir}/${my_relative_path}")
+fi
+}
+
+mydir=$(get_my_dir)
+
+if [[ ! -f ~/.local/bin/dotman ]]; then
+echo -e "[i] Symlink not found, creating one at ~/.local/bin/dotman\n"
+ln -s "${mydir}/dotman" ~/.local/bin/dotman
+else
+echo -e "[i] Symlink found in ~/.local/bin/dotman\n"
+fi
+
+case "$1" in
+install)
+  echo "=====> Installing config: ZSH"
+  rm -rf ~/.zshenv
+  rm -rf ~/.config/zsh
+  cp -r "${mydir}/zsh/.config/zsh" ~/.config
+  ln -s ~/.config/zsh/.zshenv ~/.zshenv
+
+  echo "=====> Installing config: TMUX"
+  rm -rf ~/.config/tmux
+  cp -r "${mydir}/tmux/.config/tmux" ~/.config
+  git clone --quiet https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+
+  echo "=====> Installing config: NVIM"
+  rm -rf ~/.config/nvim
+  rm -rf ~/.local/share/nvim
+  git clone --quiet https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+  rm -rf ~/.config/nvim/lua/custom
+  cp -r "${mydir}/nvim/.config/nvim/lua/custom" ~/.config/nvim/lua/custom
+
+  echo "=====> Installing config: KITTY"
+  rm -rf ~/.config/kitty
+  cp -r "${mydir}/kitty/.config/kitty" ~/.config
+
+  echo -e "\n👋 HEY\nDotfile installations are successfully completed ✅\n\n[i] In order to complete the config installation of \"NVIM\",\nenter the following command from inside of an \"nvim\" session:\n:MasonInstallAll\nafter that; wait for Lazy, TreeSitter, and Mason to complete all their installations.\n\n[i] In order to complete the config installation of \"TMUX\",\npress the following keys to [I]nstall or [U]pdate your \"tmux\" plugins from inside of a \"tmux\" session:\n<C-a> + I\n<C-a> + U\n"
+  ;;
+
+  update)
+    echo "+++++> Updating config: ZSH"
+    rm -rf ~/.zshenv
+    rm -rf ~/.config/zsh
+    cp -r "${mydir}/zsh/.config/zsh" ~/.config/zsh
+    ln -s ~/.config/zsh/.zshenv ~/.zshenv
+
+    echo "+++++> Updating config: TMUX"
+    rm -rf ~/.config/tmux/tmux.conf
+    cp -r "${mydir}/tmux/.config/tmux/tmux.conf" ~/.config/tmux
+
+    echo "+++++> Updating config: NVIM"
+    rm -rf ~/.config/nvim/lua/custom
+    cp -r "${mydir}/nvim/.config/nvim/lua/custom" ~/.config/nvim/lua
+
+    echo "+++++> Updating config: KITTY"
+    rm -rf ~/.config/kitty
+    cp -r "${mydir}/kitty/.config/kitty" ~/.config
+    
+    echo -e "\n👋 HEY\nDotfile updates are successfully completed 🙃\n"
+  ;;
+  *) echo -e "[HELP] DOTMAN installs or updates your dotfiles\nUsage:\ndotman install\ndotman update"
+  ;;
+
+esac
