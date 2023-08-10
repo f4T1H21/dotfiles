@@ -13,6 +13,9 @@ alias clear="printf '\033[2J\033[3J\033[1;1H'"
 alias cls='clear'
 alias ee='exit'
 alias v='nvim'
+
+# Update Dotfiles
+alias dp='dotman update'
 #alias sm='xrandr --output HDMI1 --mode 1920x1080 --output eDP1 --auto --left-of HDMI1'
 #alias sm='set_monitor_resolutions'
 if command -v bat &> /dev/null; then

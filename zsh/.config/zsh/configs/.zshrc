@@ -32,7 +32,7 @@ bindkey '^[[Z' undo                               # shift + tab undo last action
 # enable completion features
 autoload -Uz compinit
 zmodload zsh/complist
-compinit -d ~/.cache/zcompdump
+compinit -d "$ZDOTDIR/../zcompdump"
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete
@@ -49,7 +49,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 _comp_options+=(globdots)		# Include hidden files.
 
 # History configurations
-HISTFILE="$ZDOTDIR/history"
+HISTFILE="$ZDOTDIR/../history"
 HISTSIZE=1000000
 SAVEHIST=1000000
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE

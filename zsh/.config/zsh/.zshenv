@@ -5,7 +5,7 @@ export LESS_HIST_SIZE="-"
 
 export PATH="$PATH:$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.npm-global/bin"
 export NV="$HOME/.config/nvim/lua/custom"
-export ZDOTDIR="$HOME/.config/zsh"
+export ZDOTDIR="$HOME/.config/zsh/configs"
 export SD=$ZDOTDIR
 
 # In order to sign something, eg. Git commits
