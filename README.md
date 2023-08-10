@@ -8,6 +8,17 @@ ___Our dear dotfiles, especially for neovim, zsh and tmux___
 
 ---
 
+## Installation using the Dotfiles Manager aka Dotman
+>You can install Zsh, Tmux, Nvim and Kitty configurations via the final, pure, flat, fluent, and only dotfile managing highest-rated most downloaded THE DOTMANSDASKDJ AWLKJDAD
+
+Note, there will be a symlink created at ~/.local/bin/dotman pointing to the dotman utility in the directory where you clone this repository.
+```shell
+git clone https://github.com/f4T1H21/dotfiles.git
+cd dotfiles
+chmod u+x dotman
+dotman install
+```
+
 ## Neovim
 I use [NvChad](https://github.com/NvChad/NvChad) for a base neovim configuration, and putting my custom configurations on top of that.
 
